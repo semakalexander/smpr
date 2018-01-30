@@ -1,25 +1,12 @@
 import React, { Component } from 'react';
 import './App.css';
+
 import {
   uid,
   getRandomMatrix,
   getEMatrix,
+  withKeys,
 } from './helpers.js';
-
-
-const parse = data => data.map(row => ({
-                            id: `row-${uid()}`,
-                            values: row.map(c => ({
-                              id: `col-${uid()}`,
-                              value: c
-                            }))
-                          }));
-
-const unparsedData = [
-  [1, 0, 0],
-  [0, 1, 0],
-  [0, 0, 1]
-];
 
 class App extends Component {
   state = {
@@ -28,11 +15,16 @@ class App extends Component {
     isTransitive: false,
     isLinked: false,
     dimension: 3,
-    data: parse(unparsedData)
+    data: withKeys(getEMatrix(3))
   };
 
-  fillRandom = () => this.setState(({ dimension }) => ({ data: parse(getRandomMatrix(dimension)) }));
-  fillEMatrix = () => this.setState(({ dimension }) => ({ data: parse(getEMatrix(dimension)) }));
+  fillRandom = () => this.setState(({ dimension }) =>
+    ({ data: withKeys(getRandomMatrix(dimension)) })
+  );
+
+  fillEMatrix = () => this.setState(({ dimension }) =>
+    ({ data: withKeys(getEMatrix(dimension)) })
+  );
 
   onCellChange = (id) => {
     this.setState(prev => ({
@@ -45,6 +37,11 @@ class App extends Component {
       }))
     }))
   };
+
+  changeDimension = ({ target: { value } }) => this.setState({ dimension: value });
+
+  // todo set dimension
+  // check attributes
 
   render() {
     const {

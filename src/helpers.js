@@ -1,6 +1,3 @@
-let id = 0;
-const uid = () => id++;
-
 const getRandomInt = (min = 0, max = 1) =>
   Math.floor(Math.random() * (max + 1 - min) + min);
 
@@ -16,12 +13,12 @@ const getRandomMatrix = (dimension) => {
   return matrix;
 };
 
-const getEMatrix = (dim) => {
+const getEMatrix = (dimension) => {
   const matrix = [];
 
-  for (let row = 0; row < dim; row++) {
+  for (let row = 0; row < dimension; row++) {
     matrix[row] = [];
-    for (let col = 0; col < dim; col++) {
+    for (let col = 0; col < dimension; col++) {
       matrix[row][col] = row === col ? 1 : 0;
     }
   }
@@ -100,6 +97,16 @@ const unite = (m1, m2) => {
   return united;
 }
 
+let id = 0;
+const uid = () => id++;
+
+const withKeys = data => data.map(row => ({
+                            id: `row-${uid()}`,
+                            values: row.map(c => ({
+                              id: `col-${uid()}`,
+                              value: c
+                            }))
+                          }));
 
 module.exports = {
   getRandomInt,
@@ -110,4 +117,5 @@ module.exports = {
   reverseMatrix,
   unite,
   uid,
+  withKeys
  };
