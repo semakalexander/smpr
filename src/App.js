@@ -8,14 +8,16 @@ import {
   withKeys,
 } from './helpers.js';
 
+const getZeroArray = length => '0'.repeat(length).split('');
+
 class App extends Component {
   state = {
     isAntiSymmetric: false,
     isReflexive: false,
     isTransitive: false,
     isLinked: false,
-    dimension: 3,
-    data: withKeys(getEMatrix(3))
+    dimension: 5,
+    data: withKeys(getEMatrix(5))
   };
 
   fillRandom = () => this.setState(({ dimension }) =>
@@ -38,18 +40,22 @@ class App extends Component {
     }))
   };
 
-  changeDimension = ({ target: { value } }) => this.setState({ dimension: value });
+  changeDimension = ({ target: { value } }) => this.setState(prev => ({
+     dimension: value,
+     data: withKeys(getRandomMatrix(value))
+   }));
 
-  // todo set dimension
   // check attributes
 
   render() {
     const {
+      changeDimension,
       fillRandom,
       fillEMatrix,
       onCellChange,
       state: {
-        data
+        data,
+        dimension
       }
      } = this;
 
@@ -57,6 +63,13 @@ class App extends Component {
       <div className="App">
         <div className="container">
         <div className="btn-group">
+          <input
+              type="number"
+              min="3"
+              max="15"
+              value={dimension}
+              onChange={changeDimension}
+          />
           <button
             className="btn btn-blue"
             onClick={console.log}
