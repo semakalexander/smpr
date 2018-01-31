@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import './App.css';
 
 import {
-  uid,
   getRandomMatrix,
   getEMatrix,
   withKeys,
