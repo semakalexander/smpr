@@ -108,6 +108,8 @@ const withKeys = data => data.map(row => ({
                             }))
                           }));
 
+const withoutKeys = data => data.map(row => row.values.map(col => col.value));
+
 module.exports = {
   getRandomInt,
   getRandomMatrix,
@@ -117,5 +119,6 @@ module.exports = {
   reverseMatrix,
   unite,
   uid,
-  withKeys
+  withKeys,
+  withoutKeys
  };
